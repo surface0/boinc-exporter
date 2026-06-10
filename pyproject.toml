@@ -14,6 +14,9 @@ dependencies = [
 [project.scripts]
 boinc-exporter = "boinc_exporter.main:main"
 
+[tool.setuptools.packages.find]
+include = ["boinc_exporter*"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "--tb=short"
