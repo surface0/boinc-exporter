@@ -293,11 +293,11 @@
         },
         "overrides": [
           {
-            "matcher": { "id": "byNamePattern", "options": ".*error.*" },
+            "matcher": { "id": "byRegexp", "options": ".*error.*" },
             "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "red" } }]
           },
           {
-            "matcher": { "id": "byNamePattern", "options": ".*success.*" },
+            "matcher": { "id": "byRegexp", "options": ".*success.*" },
             "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "green" } }]
           }
         ]
