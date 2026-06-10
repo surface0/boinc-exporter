@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 env:
-  IMAGE_NAME: ${{ secrets.DOCKERHUB_USERNAME }}/boinc-exporter
+  IMAGE_NAME: seizu/boinc-exporter
 
 jobs:
   build-and-push:
@@ -27,7 +27,7 @@ jobs:
       - name: Log in to DockerHub
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          username: seizu
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Extract image metadata
