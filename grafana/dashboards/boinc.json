@@ -182,17 +182,14 @@
         {
           "expr": "boinc_task_fraction_done",
           "refId": "A",
-          "instant": true
+          "instant": true,
+          "format": "table"
         }
       ],
       "options": {
         "sortBy": [{ "displayName": "Progress", "desc": true }]
       },
       "transformations": [
-        {
-          "id": "labelsToFields",
-          "options": { "mode": "columns" }
-        },
         {
           "id": "organize",
           "options": {
@@ -204,7 +201,8 @@
             },
             "excludeByName": {
               "Time": true,
-              "job": true
+              "job": true,
+              "__name__": true
             }
           }
         }
