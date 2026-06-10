@@ -39,11 +39,11 @@ class BOINCCollector:
 
         prog = GaugeMetricFamily(
             "boinc_task_fraction_done",
-            "Completion fraction (0–1) for executing tasks",
+            "Completion fraction (0–1) for tasks with an active process",
             labels=["name", "project_url"],
         )
         for task in tasks:
-            if task.active_task_state == "executing":
+            if task.active_task_state is not None:
                 prog.add_metric([task.name, task.project_url], task.fraction_done)
         yield prog
 

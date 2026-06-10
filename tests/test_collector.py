@@ -95,11 +95,14 @@ class TestTaskMetrics:
         assert samples[0].labels["name"] == "task_a"
         assert samples[0].value == pytest.approx(0.75)
 
-    def test_non_executing_tasks_excluded_from_fraction(self):
-        tasks = [
-            Task("t1", "http://x.org/", "files_uploaded", None, 0.0),
-            Task("t2", "http://x.org/", "files_downloaded", "suspended", 0.3),
-        ]
+    def test_suspended_task_included_in_fraction(self):
+        tasks = [Task("t1", "http://x.org/", "files_downloaded", "suspended", 0.3)]
+        metrics = self._run(tasks)
+        assert len(metrics["boinc_task_fraction_done"].samples) == 1
+        assert metrics["boinc_task_fraction_done"].samples[0].value == pytest.approx(0.3)
+
+    def test_task_without_active_state_excluded_from_fraction(self):
+        tasks = [Task("t1", "http://x.org/", "files_uploaded", None, 0.0)]
         metrics = self._run(tasks)
         assert metrics["boinc_task_fraction_done"].samples == []
 
