@@ -2,7 +2,7 @@
   "title": "BOINC Metrics",
   "uid": "boinc-metrics-v1",
   "schemaVersion": 38,
-  "version": 1,
+  "version": 3,
   "refresh": "30s",
   "time": { "from": "now-6h", "to": "now" },
   "timezone": "browser",
@@ -26,7 +26,7 @@
       "gridPos": { "h": 4, "w": 4, "x": 0, "y": 0 },
       "datasource": { "type": "prometheus", "uid": "${datasource}" },
       "targets": [
-        { "expr": "boinc_up", "legendFormat": "Status", "refId": "A" }
+        { "expr": "boinc_up", "legendFormat": "{{instance}}", "refId": "A" }
       ],
       "options": {
         "reduceOptions": { "calcs": ["lastNotNull"] },
@@ -57,7 +57,7 @@
     },
     {
       "id": 2,
-      "title": "Total Credits",
+      "title": "Total Credits (All Projects)",
       "type": "stat",
       "gridPos": { "h": 4, "w": 4, "x": 4, "y": 0 },
       "datasource": { "type": "prometheus", "uid": "${datasource}" },
@@ -71,8 +71,8 @@
       },
       "fieldConfig": {
         "defaults": {
-          "decimals": 0,
-          "unit": "short",
+          "decimals": 2,
+          "unit": "none",
           "color": { "mode": "fixed", "fixedColor": "blue" },
           "thresholds": {
             "mode": "absolute",
@@ -83,7 +83,7 @@
     },
     {
       "id": 3,
-      "title": "Avg Daily Credits",
+      "title": "Avg Daily Credits (All Projects)",
       "type": "stat",
       "gridPos": { "h": 4, "w": 4, "x": 8, "y": 0 },
       "datasource": { "type": "prometheus", "uid": "${datasource}" },
@@ -97,8 +97,8 @@
       },
       "fieldConfig": {
         "defaults": {
-          "decimals": 1,
-          "unit": "short",
+          "decimals": 2,
+          "unit": "none",
           "color": { "mode": "fixed", "fixedColor": "purple" },
           "thresholds": {
             "mode": "absolute",
@@ -116,18 +116,20 @@
       "targets": [
         {
           "expr": "boinc_tasks_total{state=\"executing\"}",
-          "legendFormat": "Executing",
+          "legendFormat": "{{instance}}",
           "refId": "A"
         }
       ],
       "options": {
         "reduceOptions": { "calcs": ["lastNotNull"] },
         "colorMode": "value",
-        "graphMode": "none"
+        "graphMode": "none",
+        "textMode": "value_and_name"
       },
       "fieldConfig": {
         "defaults": {
           "decimals": 0,
+          "unit": "none",
           "color": { "mode": "fixed", "fixedColor": "green" },
           "thresholds": {
             "mode": "absolute",
@@ -138,12 +140,16 @@
     },
     {
       "id": 5,
-      "title": "Tasks by State",
+      "title": "Tasks by State (All Hosts)",
       "type": "bargauge",
       "gridPos": { "h": 8, "w": 12, "x": 0, "y": 4 },
       "datasource": { "type": "prometheus", "uid": "${datasource}" },
       "targets": [
-        { "expr": "boinc_tasks_total", "legendFormat": "{{state}}", "refId": "A" }
+        {
+          "expr": "sum by (state) (boinc_tasks_total)",
+          "legendFormat": "{{state}}",
+          "refId": "A"
+        }
       ],
       "options": {
         "reduceOptions": { "calcs": ["lastNotNull"] },
@@ -154,6 +160,7 @@
       "fieldConfig": {
         "defaults": {
           "decimals": 0,
+          "unit": "none",
           "min": 0,
           "thresholds": {
             "mode": "absolute",
@@ -167,32 +174,36 @@
     },
     {
       "id": 6,
-      "title": "Active Task Progress",
+      "title": "Active Task Progress (All Hosts / All Tasks)",
       "type": "table",
       "gridPos": { "h": 8, "w": 12, "x": 12, "y": 4 },
       "datasource": { "type": "prometheus", "uid": "${datasource}" },
       "targets": [
         {
           "expr": "boinc_task_fraction_done",
-          "legendFormat": "{{name}}",
           "refId": "A",
-          "instant": true
+          "instant": true,
+          "format": "table"
         }
       ],
       "options": {
-        "sortBy": [{ "displayName": "Value", "desc": true }]
+        "sortBy": [{ "displayName": "Progress", "desc": true }]
       },
       "transformations": [
-        { "id": "labelsToFields", "options": { "valueLabel": "name" } },
         {
           "id": "organize",
           "options": {
             "renameByName": {
+              "instance": "Host",
               "name": "Task",
               "project_url": "Project",
               "Value": "Progress"
             },
-            "excludeByName": { "Time": true }
+            "excludeByName": {
+              "Time": true,
+              "job": true,
+              "__name__": true
+            }
           }
         }
       ],
@@ -212,69 +223,63 @@
     },
     {
       "id": 7,
-      "title": "Total Credits by Project",
+      "title": "Total Credits by Project (All Hosts)",
       "type": "timeseries",
       "gridPos": { "h": 8, "w": 12, "x": 0, "y": 12 },
       "datasource": { "type": "prometheus", "uid": "${datasource}" },
       "targets": [
         {
-          "expr": "boinc_project_total_credit",
+          "expr": "sum by (project) (boinc_project_total_credit)",
           "legendFormat": "{{project}}",
           "refId": "A"
         }
       ],
       "options": {
-        "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["lastNotNull"] }
+        "legend": { "displayMode": "table", "placement": "right", "calcs": ["lastNotNull"] }
       },
       "fieldConfig": {
         "defaults": {
-          "unit": "short",
-          "decimals": 0,
+          "unit": "none",
+          "decimals": 2,
           "custom": { "lineWidth": 2, "fillOpacity": 10 }
         }
       }
     },
     {
       "id": 8,
-      "title": "Avg Daily Credits by Project",
+      "title": "Avg Daily Credits by Project (All Hosts)",
       "type": "timeseries",
       "gridPos": { "h": 8, "w": 12, "x": 12, "y": 12 },
       "datasource": { "type": "prometheus", "uid": "${datasource}" },
       "targets": [
         {
-          "expr": "boinc_project_avg_credit",
+          "expr": "sum by (project) (boinc_project_avg_credit)",
           "legendFormat": "{{project}}",
           "refId": "A"
         }
       ],
       "options": {
-        "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["lastNotNull", "max"] }
+        "legend": { "displayMode": "table", "placement": "right", "calcs": ["lastNotNull", "max"] }
       },
       "fieldConfig": {
         "defaults": {
-          "unit": "short",
-          "decimals": 1,
+          "unit": "none",
+          "decimals": 2,
           "custom": { "lineWidth": 2, "fillOpacity": 10 }
         }
       }
     },
     {
       "id": 9,
-      "title": "Jobs Success / Error by Project",
+      "title": "Jobs Success by Project (All Hosts)",
       "type": "barchart",
-      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 20 },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 20 },
       "datasource": { "type": "prometheus", "uid": "${datasource}" },
       "targets": [
         {
-          "expr": "boinc_project_jobs_success_total",
-          "legendFormat": "{{project}} success",
+          "expr": "sum by (project) (boinc_project_jobs_success_total)",
+          "legendFormat": "{{project}}",
           "refId": "A",
-          "instant": true
-        },
-        {
-          "expr": "boinc_project_jobs_error_total",
-          "legendFormat": "{{project}} error",
-          "refId": "B",
           "instant": true
         }
       ],
@@ -283,24 +288,43 @@
         "groupWidth": 0.7,
         "barWidth": 0.9,
         "stacking": "none",
-        "legend": { "displayMode": "list", "placement": "bottom" }
+        "legend": { "displayMode": "list", "placement": "right" }
       },
       "fieldConfig": {
         "defaults": {
-          "unit": "short",
+          "unit": "none",
           "decimals": 0,
-          "custom": { "lineWidth": 1 }
-        },
-        "overrides": [
-          {
-            "matcher": { "id": "byNamePattern", "options": ".*error.*" },
-            "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "red" } }]
-          },
-          {
-            "matcher": { "id": "byNamePattern", "options": ".*success.*" },
-            "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "green" } }]
-          }
-        ]
+          "color": { "mode": "fixed", "fixedColor": "green" }
+        }
+      }
+    },
+    {
+      "id": 10,
+      "title": "Jobs Error by Project (All Hosts)",
+      "type": "barchart",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 20 },
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "targets": [
+        {
+          "expr": "sum by (project) (boinc_project_jobs_error_total)",
+          "legendFormat": "{{project}}",
+          "refId": "A",
+          "instant": true
+        }
+      ],
+      "options": {
+        "xTickLabelRotation": 0,
+        "groupWidth": 0.7,
+        "barWidth": 0.9,
+        "stacking": "none",
+        "legend": { "displayMode": "list", "placement": "right" }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "decimals": 0,
+          "color": { "mode": "fixed", "fixedColor": "red" }
+        }
       }
     }
   ]
