@@ -107,7 +107,7 @@ python -m boinc_exporter
 ## DockerHub
 
 ```bash
-docker pull surface0/boinc-exporter
+docker pull seizu/boinc-exporter
 ```
 
 バージョンタグ付きリリース：
