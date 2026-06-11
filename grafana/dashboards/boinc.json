@@ -271,61 +271,93 @@
     },
     {
       "id": 9,
-      "title": "Jobs Success by Project (All Hosts)",
+      "title": "Jobs Success by Host (stacked by Project)",
       "type": "barchart",
       "gridPos": { "h": 8, "w": 7, "x": 0, "y": 24 },
       "datasource": { "type": "prometheus", "uid": "${datasource}" },
       "targets": [
         {
-          "expr": "sum by (project) (boinc_project_jobs_success_total)",
-          "legendFormat": "{{project}}",
+          "expr": "sum by (instance, project) (boinc_project_jobs_success_total)",
           "refId": "A",
-          "instant": true
+          "instant": true,
+          "format": "table"
         }
       ],
       "options": {
         "xTickLabelRotation": 0,
         "groupWidth": 0.7,
         "barWidth": 0.9,
-        "stacking": "none",
+        "stacking": "normal",
+        "orientation": "horizontal",
+        "showValue": "never",
         "legend": { "displayMode": "list", "placement": "right" }
       },
       "fieldConfig": {
         "defaults": {
           "unit": "none",
           "decimals": 0,
-          "color": { "mode": "fixed", "fixedColor": "green" }
+          "color": { "mode": "palette-classic" }
         }
-      }
+      },
+      "transformations": [
+        {
+          "id": "organize",
+          "options": { "excludeByName": { "Time": true } }
+        },
+        {
+          "id": "partitionByValues",
+          "options": { "fields": ["project"], "keepFields": false, "naming": { "asLabels": true } }
+        },
+        {
+          "id": "joinByField",
+          "options": { "byField": "instance", "mode": "outer" }
+        }
+      ]
     },
     {
       "id": 10,
-      "title": "Jobs Error by Project (All Hosts)",
+      "title": "Jobs Error by Host (stacked by Project)",
       "type": "barchart",
       "gridPos": { "h": 8, "w": 7, "x": 7, "y": 24 },
       "datasource": { "type": "prometheus", "uid": "${datasource}" },
       "targets": [
         {
-          "expr": "sum by (project) (boinc_project_jobs_error_total)",
-          "legendFormat": "{{project}}",
+          "expr": "sum by (instance, project) (boinc_project_jobs_error_total)",
           "refId": "A",
-          "instant": true
+          "instant": true,
+          "format": "table"
         }
       ],
       "options": {
         "xTickLabelRotation": 0,
         "groupWidth": 0.7,
         "barWidth": 0.9,
-        "stacking": "none",
+        "stacking": "normal",
+        "orientation": "horizontal",
+        "showValue": "never",
         "legend": { "displayMode": "list", "placement": "right" }
       },
       "fieldConfig": {
         "defaults": {
           "unit": "none",
           "decimals": 0,
-          "color": { "mode": "fixed", "fixedColor": "red" }
+          "color": { "mode": "palette-classic" }
         }
-      }
+      },
+      "transformations": [
+        {
+          "id": "organize",
+          "options": { "excludeByName": { "Time": true } }
+        },
+        {
+          "id": "partitionByValues",
+          "options": { "fields": ["project"], "keepFields": false, "naming": { "asLabels": true } }
+        },
+        {
+          "id": "joinByField",
+          "options": { "byField": "instance", "mode": "outer" }
+        }
+      ]
     }
   ]
 }
