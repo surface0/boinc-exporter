@@ -67,6 +67,16 @@ class BOINCCollector:
             "Total failed jobs",
             labels=["project", "url"],
         )
+        host_total_credit = GaugeMetricFamily(
+            "boinc_host_total_credit",
+            "Total accumulated credit contributed by this host",
+            labels=["project", "url"],
+        )
+        host_avg_credit = GaugeMetricFamily(
+            "boinc_host_avg_credit",
+            "Recent average daily credit contributed by this host",
+            labels=["project", "url"],
+        )
 
         for proj in projects:
             labels = [proj.name, proj.url]
@@ -74,8 +84,12 @@ class BOINCCollector:
             avg_credit.add_metric(labels, proj.avg_credit)
             jobs_success.add_metric(labels, proj.jobs_success)
             jobs_error.add_metric(labels, proj.jobs_error)
+            host_total_credit.add_metric(labels, proj.host_total_credit)
+            host_avg_credit.add_metric(labels, proj.host_avg_credit)
 
         yield total_credit
         yield avg_credit
         yield jobs_success
         yield jobs_error
+        yield host_total_credit
+        yield host_avg_credit
