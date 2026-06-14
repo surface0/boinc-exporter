@@ -108,8 +108,8 @@ The dashboard at `grafana/dashboards/boinc.json` is automatically provisioned wh
 | Active Task Progress | Progress table for all executing tasks (all hosts) |
 | Total Credits by Project | Credit history per project (all hosts aggregated) |
 | Avg Daily Credits by Project | Daily credit history per project (all hosts aggregated) |
-| Jobs Success by Project | Successful job counts per project |
-| Jobs Error by Project | Failed job counts per project |
+| Jobs Success by Host | Successful job counts per host, stacked by project |
+| Jobs Error by Host | Failed job counts per host, stacked by project |
 
 ## DockerHub
 

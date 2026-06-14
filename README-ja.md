@@ -108,8 +108,8 @@ python -m boinc_exporter
 | Active Task Progress | 実行中タスクの進捗一覧（全ホスト・全タスク） |
 | Total Credits by Project | プロジェクト別累積クレジットの推移 |
 | Avg Daily Credits by Project | プロジェクト別1日平均クレジットの推移 |
-| Jobs Success by Project | プロジェクト別成功ジョブ数 |
-| Jobs Error by Project | プロジェクト別失敗ジョブ数 |
+| Jobs Success by Host | ホスト別の成功ジョブ数（プロジェクトで積み上げ）|
+| Jobs Error by Host | ホスト別の失敗ジョブ数（プロジェクトで積み上げ）|
 
 ## DockerHub
 
