@@ -187,6 +187,8 @@ class TestGetProjects:
             "<master_url>https://www.worldcommunitygrid.org/</master_url>",
             "<user_total_credit>9876.5</user_total_credit>",
             "<user_expavg_credit>123.4</user_expavg_credit>",
+            "<host_total_credit>4321.0</host_total_credit>",
+            "<host_expavg_credit>67.8</host_expavg_credit>",
             "<njobs_success>500</njobs_success>",
             "<njobs_error>3</njobs_error>",
             "</project></projects>",
@@ -198,8 +200,26 @@ class TestGetProjects:
         assert p.url == "https://www.worldcommunitygrid.org/"
         assert p.total_credit == pytest.approx(9876.5)
         assert p.avg_credit == pytest.approx(123.4)
+        assert p.host_total_credit == pytest.approx(4321.0)
+        assert p.host_avg_credit == pytest.approx(67.8)
         assert p.jobs_success == 500
         assert p.jobs_error == 3
+
+    def test_host_credit_defaults_to_zero_when_absent(self):
+        client, sock = _connected_client()
+        sock.recv.side_effect = [_xml_reply(
+            "<projects><project>",
+            "<project_name>P</project_name>",
+            "<master_url>http://p.org/</master_url>",
+            "<user_total_credit>10</user_total_credit>",
+            "<user_expavg_credit>1</user_expavg_credit>",
+            "<njobs_success>1</njobs_success>",
+            "<njobs_error>0</njobs_error>",
+            "</project></projects>",
+        )]
+        p = client.get_projects()[0]
+        assert p.host_total_credit == 0.0
+        assert p.host_avg_credit == 0.0
 
     def test_empty_projects(self):
         client, sock = _connected_client()

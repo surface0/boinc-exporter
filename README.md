@@ -23,6 +23,8 @@ A Prometheus / VictoriaMetrics exporter for BOINC that collects task status, cre
 | `boinc_task_fraction_done{name,project_url}` | Gauge | Completion fraction (0–1) for executing tasks |
 | `boinc_project_total_credit{project,url}` | Gauge | Total accumulated credit per project |
 | `boinc_project_avg_credit{project,url}` | Gauge | Recent average daily credit per project |
+| `boinc_host_total_credit{project,url}` | Gauge | Total accumulated credit contributed by this host |
+| `boinc_host_avg_credit{project,url}` | Gauge | Recent average daily credit contributed by this host |
 | `boinc_project_jobs_success_total{project,url}` | Gauge | Total successfully completed jobs |
 | `boinc_project_jobs_error_total{project,url}` | Gauge | Total failed jobs |
 
@@ -87,6 +89,8 @@ python -m boinc_exporter
 
 ## Grafana Dashboard
 
+![BOINC dashboard](docs/images/README-dashboard.webp)
+
 The dashboard at `grafana/dashboards/boinc.json` is automatically provisioned when using docker-compose, or can be imported manually into Grafana.
 
 ### Panels
@@ -96,13 +100,16 @@ The dashboard at `grafana/dashboards/boinc.json` is automatically provisioned wh
 | BOINC Status | Connection state per host |
 | Total Credits | Sum of credits across all projects |
 | Avg Daily Credits | Sum of average daily credits across all projects |
+| Host Total Credit | Total accumulated credit per host |
+| Host Avg Daily Credit | Recent average daily credit per host |
 | Executing Tasks | Number of running tasks per host |
 | Tasks by State | Task counts aggregated across all hosts |
+| Executing Tasks Timeline | Executing task count per host over time (state timeline) |
 | Active Task Progress | Progress table for all executing tasks (all hosts) |
 | Total Credits by Project | Credit history per project (all hosts aggregated) |
 | Avg Daily Credits by Project | Daily credit history per project (all hosts aggregated) |
-| Jobs Success by Project | Successful job counts per project |
-| Jobs Error by Project | Failed job counts per project |
+| Jobs Success by Host | Successful job counts per host, stacked by project |
+| Jobs Error by Host | Failed job counts per host, stacked by project |
 
 ## DockerHub
 

@@ -127,6 +127,20 @@ class TestProjectMetrics:
         by_project = {s.labels["project"]: s.value for s in metrics["boinc_project_avg_credit"].samples}
         assert by_project["WCG"] == pytest.approx(50.0)
 
+    def test_host_total_credit(self):
+        projects = [Project("WCG", "https://wcg.org/", 5000.0, 50.0, 200, 5,
+                            host_total_credit=1200.0, host_avg_credit=30.0)]
+        metrics = self._run(projects)
+        by_project = {s.labels["project"]: s.value for s in metrics["boinc_host_total_credit"].samples}
+        assert by_project["WCG"] == pytest.approx(1200.0)
+
+    def test_host_avg_credit(self):
+        projects = [Project("WCG", "https://wcg.org/", 5000.0, 50.0, 200, 5,
+                            host_total_credit=1200.0, host_avg_credit=30.0)]
+        metrics = self._run(projects)
+        by_project = {s.labels["project"]: s.value for s in metrics["boinc_host_avg_credit"].samples}
+        assert by_project["WCG"] == pytest.approx(30.0)
+
     def test_job_counts(self):
         projects = [Project("SETI", "https://seti.org/", 1000.0, 10.0, 100, 2)]
         metrics = self._run(projects)
@@ -149,5 +163,6 @@ class TestProjectMetrics:
     def test_empty_projects(self):
         metrics = self._run([])
         for key in ("boinc_project_total_credit", "boinc_project_avg_credit",
-                    "boinc_project_jobs_success_total", "boinc_project_jobs_error_total"):
+                    "boinc_project_jobs_success_total", "boinc_project_jobs_error_total",
+                    "boinc_host_total_credit", "boinc_host_avg_credit"):
             assert metrics[key].samples == []

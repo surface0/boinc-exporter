@@ -44,6 +44,8 @@ class Project:
     avg_credit: float
     jobs_success: int
     jobs_error: int
+    host_total_credit: float = 0.0
+    host_avg_credit: float = 0.0
 
 
 class BOINCClientError(Exception):
@@ -144,5 +146,7 @@ class BOINCClient:
                 avg_credit=float(p.findtext("user_expavg_credit", "0")),
                 jobs_success=int(p.findtext("njobs_success", "0")),
                 jobs_error=int(p.findtext("njobs_error", "0")),
+                host_total_credit=float(p.findtext("host_total_credit", "0")),
+                host_avg_credit=float(p.findtext("host_expavg_credit", "0")),
             ))
         return projects
