@@ -2,7 +2,7 @@
   "title": "BOINC Metrics",
   "uid": "boinc-metrics-v1",
   "schemaVersion": 38,
-  "version": 7,
+  "version": 13,
   "refresh": "30s",
   "time": { "from": "now-6h", "to": "now" },
   "timezone": "browser",
@@ -176,7 +176,7 @@
       "id": 6,
       "title": "Active Task Progress (All Hosts / All Tasks)",
       "type": "table",
-      "gridPos": { "h": 24, "w": 10, "x": 14, "y": 8 },
+      "gridPos": { "h": 16, "w": 10, "x": 14, "y": 16 },
       "datasource": { "type": "prometheus", "uid": "${datasource}" },
       "targets": [
         {
@@ -429,6 +429,40 @@
               { "color": "blue", "value": null },
               { "color": "yellow", "value": 250 }
             ]
+          }
+        }
+      }
+    },
+    {
+      "id": 13,
+      "title": "Executing Tasks Timeline (by Host)",
+      "type": "state-timeline",
+      "gridPos": { "h": 8, "w": 10, "x": 14, "y": 8 },
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "targets": [
+        {
+          "expr": "sum by (instance) (boinc_tasks_total{state=\"executing\"})",
+          "legendFormat": "{{instance}}",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "mergeValues": true,
+        "showValue": "auto",
+        "alignValue": "center",
+        "rowHeight": 0.9,
+        "legend": { "showLegend": false, "displayMode": "hidden", "placement": "bottom" }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "min": 1,
+          "max": 10,
+          "custom": { "fillOpacity": 75, "lineWidth": 0 },
+          "color": { "mode": "continuous-GrYlRd" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{ "color": "green", "value": null }]
           }
         }
       }
