@@ -100,8 +100,11 @@ The dashboard at `grafana/dashboards/boinc.json` is automatically provisioned wh
 | BOINC Status | Connection state per host |
 | Total Credits | Sum of credits across all projects |
 | Avg Daily Credits | Sum of average daily credits across all projects |
+| Host Total Credit | Total accumulated credit per host |
+| Host Avg Daily Credit | Recent average daily credit per host |
 | Executing Tasks | Number of running tasks per host |
 | Tasks by State | Task counts aggregated across all hosts |
+| Executing Tasks Timeline | Executing task count per host over time (state timeline) |
 | Active Task Progress | Progress table for all executing tasks (all hosts) |
 | Total Credits by Project | Credit history per project (all hosts aggregated) |
 | Avg Daily Credits by Project | Daily credit history per project (all hosts aggregated) |

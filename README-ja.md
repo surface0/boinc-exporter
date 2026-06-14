@@ -100,8 +100,11 @@ python -m boinc_exporter
 | BOINC Status | 接続状態（ホスト別） |
 | Total Credits | 全プロジェクト合計クレジット |
 | Avg Daily Credits | 全プロジェクト合計の1日平均クレジット |
+| Host Total Credit | ホスト別の累積クレジット |
+| Host Avg Daily Credit | ホスト別の直近1日平均クレジット |
 | Executing Tasks | 実行中タスク数（ホスト別） |
 | Tasks by State | 状態別タスク数（全ホスト統合） |
+| Executing Tasks Timeline | ホスト別の実行中タスク数の時系列（state timeline） |
 | Active Task Progress | 実行中タスクの進捗一覧（全ホスト・全タスク） |
 | Total Credits by Project | プロジェクト別累積クレジットの推移 |
 | Avg Daily Credits by Project | プロジェクト別1日平均クレジットの推移 |
