@@ -23,6 +23,8 @@ A Prometheus / VictoriaMetrics exporter for BOINC that collects task status, cre
 | `boinc_task_fraction_done{name,project_url}` | Gauge | Completion fraction (0–1) for executing tasks |
 | `boinc_project_total_credit{project,url}` | Gauge | Total accumulated credit per project |
 | `boinc_project_avg_credit{project,url}` | Gauge | Recent average daily credit per project |
+| `boinc_host_total_credit{project,url}` | Gauge | Total accumulated credit contributed by this host |
+| `boinc_host_avg_credit{project,url}` | Gauge | Recent average daily credit contributed by this host |
 | `boinc_project_jobs_success_total{project,url}` | Gauge | Total successfully completed jobs |
 | `boinc_project_jobs_error_total{project,url}` | Gauge | Total failed jobs |
 
