@@ -12,7 +12,7 @@ A Prometheus / VictoriaMetrics exporter for BOINC that collects task status, cre
 - Exposes a Prometheus-compatible `/metrics` endpoint
 - Includes a Grafana dashboard
 - Docker / docker-compose support
-- Multi-host support (scrape multiple BOINC clients independently)
+- Multi-host support (run one exporter instance per BOINC client, scraped independently)
 
 ## Metrics
 
