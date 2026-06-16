@@ -4,6 +4,8 @@
 
 BOINC クライアントのタスク状況・功績・プロジェクト情報を取得し、Prometheus / VictoriaMetrics に公開する Exporter です。
 
+**ソースリポジトリ:** https://github.com/surface0/boinc-exporter
+
 ## 機能
 
 - BOINC GUI RPC (TCP/31416) 経由でメトリクスを収集

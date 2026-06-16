@@ -4,6 +4,8 @@
 
 A Prometheus / VictoriaMetrics exporter for BOINC that collects task status, credits, and project information via the BOINC GUI RPC interface.
 
+**Source repository:** https://github.com/surface0/boinc-exporter
+
 [日本語版 README はこちら](README-ja.md)
 
 ## Features
