@@ -70,6 +70,17 @@ This repository uses a **PR-based workflow**; `main` is the default branch.
 4. Ensure the test suite passes on Python 3.11 and 3.12.
 5. Open a pull request describing **what** changed and **why**.
 
+## Releasing
+
+Container images are published to Docker Hub (`seizu/boinc-exporter`) by CI.
+To cut a new release, push a version tag:
+
+```bash
+git tag v1.0.0
+git push --tags
+# GitHub Actions will build and push the image to Docker Hub automatically
+```
+
 ## Reporting bugs and requesting features
 
 Open an issue on GitHub with enough detail to reproduce the problem (BOINC

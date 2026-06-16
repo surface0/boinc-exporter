@@ -119,27 +119,9 @@ python -m boinc_exporter
 docker pull seizu/boinc-exporter
 ```
 
-バージョンタグ付きリリース：
-
-```bash
-git tag v1.0.0
-git push --tags
-# → GitHub Actions が自動でビルドし DockerHub に push します
-```
-
 ## 開発
 
-```bash
-# 依存関係のインストール
-pip install -r requirements-dev.txt
-pip install -e .
-
-# テスト実行
-python -m pytest -v
-
-# カバレッジ付きテスト
-python -m pytest --cov=boinc_exporter --cov-report=term-missing
-```
+開発環境のセットアップ・テスト・コントリビューション方法は [CONTRIBUTING.md](CONTRIBUTING.md) を参照してください。
 
 ## ライセンス
 
