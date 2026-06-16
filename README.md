@@ -91,7 +91,7 @@ python -m boinc_exporter
 
 ## Grafana Dashboard
 
-![BOINC dashboard](docs/images/README-dashboard.webp)
+![BOINC dashboard](https://raw.githubusercontent.com/surface0/boinc-exporter/main/docs/images/README-dashboard.webp)
 
 The dashboard at `grafana/dashboards/boinc.json` is automatically provisioned when using docker-compose, or can be imported manually into Grafana.
 
