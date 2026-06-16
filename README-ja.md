@@ -91,7 +91,7 @@ python -m boinc_exporter
 
 ## Grafana ダッシュボード
 
-![BOINC ダッシュボード](docs/images/README-dashboard.webp)
+![BOINC ダッシュボード](https://raw.githubusercontent.com/surface0/boinc-exporter/main/docs/images/README-dashboard.webp)
 
 `grafana/dashboards/boinc.json` を Grafana にインポートするか、docker-compose 起動時に自動でプロビジョニングされます。
 
