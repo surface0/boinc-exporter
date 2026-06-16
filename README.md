@@ -119,27 +119,9 @@ The dashboard at `grafana/dashboards/boinc.json` is automatically provisioned wh
 docker pull seizu/boinc-exporter
 ```
 
-To publish a new release:
-
-```bash
-git tag v1.0.0
-git push --tags
-# GitHub Actions will build and push to DockerHub automatically
-```
-
 ## Development
 
-```bash
-# Install dependencies
-pip install -r requirements-dev.txt
-pip install -e .
-
-# Run tests
-python -m pytest -v
-
-# Run tests with coverage
-python -m pytest --cov=boinc_exporter --cov-report=term-missing
-```
+See [CONTRIBUTING.md](CONTRIBUTING.md) for development setup, testing, and contribution guidelines.
 
 ## License
 
