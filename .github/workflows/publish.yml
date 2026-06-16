@@ -40,6 +40,12 @@ jobs:
             type=semver,pattern={{major}}.{{minor}}
             type=ref,event=branch
             type=raw,value=latest,enable={{is_default_branch}}
+          labels: |
+            org.opencontainers.image.title=boinc-exporter
+            org.opencontainers.image.description=Prometheus / VictoriaMetrics exporter for BOINC
+            org.opencontainers.image.source=https://github.com/surface0/boinc-exporter
+            org.opencontainers.image.url=https://github.com/surface0/boinc-exporter
+            org.opencontainers.image.licenses=MIT
 
       - name: Build and push
         uses: docker/build-push-action@v6
@@ -51,3 +57,13 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+      - name: Sync README to Docker Hub
+        if: github.ref == 'refs/heads/main'
+        uses: peter-evans/dockerhub-description@v4
+        with:
+          username: seizu
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          repository: ${{ env.IMAGE_NAME }}
+          short-description: "Prometheus / VictoriaMetrics exporter for BOINC"
+          readme-filepath: ./README.md
